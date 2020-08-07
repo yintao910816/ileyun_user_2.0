@@ -56,6 +56,13 @@ class HCHomeViewController: BaseViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
+//            let url = "https://ileyun.ivfcn.com/patient/#/payOrderTG?token=\(userDefault.token)"
+//            let web = BaseWebViewController()
+//            web.url = url
+//            self.navigationController?.pushViewController(web, animated: true)
+//        }
     }
     
     override func rxBind() {
