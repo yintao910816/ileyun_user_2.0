@@ -72,6 +72,9 @@ extension HCAppDelegate {
             .map(model: AppVersionModel.self)
             .subscribe(onSuccess: { res in
                 
+                HCHelper.share.enableWchatLogin = !Bundle.main.isInCheck(version: res.versionName)
+                HCHelper.share.enableWchatLoginSubjet.onNext(HCHelper.share.enableWchatLogin)
+
                 if Bundle.main.isNewest(version: res.versionName) == false
                 {
                     NoticesCenter.alert(title: "有最新版本可以升级", message: "", cancleTitle: "取消", okTitle: "去更新", callBackOK: {
@@ -89,6 +92,8 @@ extension HCAppDelegate {
                 }
             }) { error in
                 print("--- \(error) -- 已是最新版本")
+                HCHelper.share.enableWchatLogin = true
+                HCHelper.share.enableWchatLoginSubjet.onNext(true)
             }
     }
 }
