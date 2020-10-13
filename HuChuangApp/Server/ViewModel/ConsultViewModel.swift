@@ -23,7 +23,7 @@ class ConsultViewModel: RefreshVM<HCDoctorItemModel> {
         super.init()
                 
         reloadSubject
-        ._doNext(forNotice: hud)
+//        ._doNext(forNotice: hud)
             .subscribe(onNext: { [weak self] in
                 self?.prepareRequestData()
             })

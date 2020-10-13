@@ -60,7 +60,7 @@ class HCArticleCell: UICollectionViewCell {
         titleLabel.snp.makeConstraints {
             $0.left.equalTo(coverImgV.snp.right).offset(10)
             $0.top.equalTo(coverImgV.snp.top)
-            $0.right.equalTo(25)
+            $0.right.equalTo(-25)
         }
         
         readLabel.snp.makeConstraints {

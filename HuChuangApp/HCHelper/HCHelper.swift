@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import HandyJSON
 
 class HCHelper {
     
@@ -48,6 +49,10 @@ class HCHelper {
     
     public static func setupHelper() {
         _ = HCHelper.share
+        
+        if let user = JSONDeserializer<HCUserModel>.deserializeFrom(json: userDefault.loginInfoString) {
+            HCHelper.share.userInfoModel = user
+        }
     }
 }
 
@@ -72,6 +77,7 @@ extension HCHelper {
     func clearUser() {
         userDefault.uid = noUID
         userDefault.token = ""
+        userDefault.loginInfoString = ""
         
         userInfoModel = nil
     }
@@ -84,6 +90,10 @@ extension HCHelper {
         userDefault.unitIdNoEmpty = user.unitId
 
         HCHelper.share.userInfoModel = user
+        
+        if let userInfoString = user.toJSONString() {
+            userDefault.loginInfoString = userInfoString
+        }
         
         HCHelper.share.userInfoHasReload.onNext(user)
     }

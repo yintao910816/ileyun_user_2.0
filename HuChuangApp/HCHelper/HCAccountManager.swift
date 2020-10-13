@@ -56,7 +56,7 @@ extension HCAccountManager {
     
     /// 拼接医生主页分享链接
     class func doctorHomeLink(forShare userId: String) ->String {
-        let urlString = "\(APIAssistance.baseH5Host)?from=groupmessage#/\(H5Type.doctorHome)?userId=\(userId)&share=1"
+        let urlString = "\(APIAssistance.baseH5Host)consult/#/\(H5Type.consultationHome)/\(userId)?share=1&facilityType=APP"
         return urlString
     }
     /// 拼接文章分享链接

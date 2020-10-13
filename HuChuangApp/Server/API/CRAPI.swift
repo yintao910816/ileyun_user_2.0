@@ -8,6 +8,7 @@
 
 import Foundation
 import Moya
+import HandyJSON
 
 /// 文章栏目编码
 enum HCWebCmsType: String {
@@ -54,7 +55,7 @@ enum H5Type: String {
     /// 开发中
     case underDev = "underDev"
     /// 咨询医生信息
-    case doctorHome = "doctorHome"
+    case consultationHome = "consultationHome"
     /// 快速问诊
     case doctorCs = "DoctorCs"
     /// 问诊记录
@@ -76,29 +77,39 @@ enum H5Type: String {
     /// 通知中心
     case noticeAndMessage = "noticeAndMessage"
     /// 订单
-    case csRecord = "CsRecord"
+    case chatConsulRecord = "chatConsulRecord"
     /// 我的医生
     case myDoctor = "myDoctor"
     /// 分享app给好友
     case share = "share"
-        
+    
     func getLocalUrl(needToken: Bool = true) ->String {
-        if needToken {
-            return "\(APIAssistance.baseH5Host)#/\(rawValue)?token=\(userDefault.token)"
-        }
-        return "\(APIAssistance.baseH5Host)#/\(rawValue)"
-//        switch self {
-//        case .healthRecordsUser:
-//            return "\(APIAssistance.baseH5Host)#/HealthRecords"
-//        case .doctorHome:
-//            return "\(APIAssistance.baseH5Host)#/doctorHome"
-////        case .csRecord:
-////            return "\(APIAssistance.baseH5Host)#/csRecord?token=\(userDefault.token)"
-//        case .doctorCs:
-//            return "\(APIAssistance.baseH5Host)#/DoctorCs?token=\(userDefault.token)"
-//        default:
-//            return ""
+//        if needToken {
+//            return "\(APIAssistance.baseH5Host)#/\(rawValue)?token=\(userDefault.token)"
 //        }
+//        return "\(APIAssistance.baseH5Host)#/\(rawValue)"
+        
+        var urlBase = APIAssistance.baseH5Host
+        switch self {
+        case .chatConsulRecord:
+            urlBase = "\(urlBase)consult/#/\(rawValue)"
+        default:
+            urlBase = "\(urlBase)#/\(rawValue)"
+        }
+        
+        if needToken {
+            return "\(urlBase)?token=\(userDefault.token)"
+        }
+        return urlBase
+    }
+    
+    /// 获取医生主页url
+    public func doctorHomeURL(id: String) ->String {
+        let urlBase = "\(APIAssistance.baseH5Host)consult/#/\(rawValue)/\(id)"
+        if let userInfo = HCHelper.share.userInfoModel?.toJSONString(), let encodeInfo = userInfo.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)  {
+            return "\(urlBase)?token=\(userDefault.token)&userInfo=\(encodeInfo)&facilityType=h5"
+        }
+        return "\(urlBase)?token=\(userDefault.token)&facilityType=h5"
     }
 }
 

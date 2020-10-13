@@ -47,7 +47,7 @@ class HCDoctorHomeController: BaseWebViewController {
 
     override func prepare(parameters: [String : Any]?) {
         doctorModel = (parameters!["model"] as! HCDoctorItemModel)
-        super.prepare(parameters: ["url": "\(H5Type.doctorHome.getLocalUrl())&userId=\(doctorModel.userId)"])
+        super.prepare(parameters: ["url": H5Type.consultationHome.doctorHomeURL(id: doctorModel.userId)])
     }
 }
 

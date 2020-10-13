@@ -39,7 +39,7 @@ class MineHeaderView: UIView {
             openH5Publish.onNext(.noticeAndMessage)
         case 202:
             // 订单
-            openH5Publish.onNext(.csRecord)
+            openH5Publish.onNext(.chatConsulRecord)
         case 203:
             // 关注
             openH5Publish.onNext(.myFocused)
